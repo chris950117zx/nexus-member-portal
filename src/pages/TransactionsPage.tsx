@@ -1,0 +1,14 @@
+import { ListFilter, Search } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { NeonCard } from '../components/ui/NeonCard'
+import { PageHeading } from '../components/ui/PageHeading'
+import { StatusBadge } from '../components/ui/StatusBadge'
+import { useMemberStore } from '../store/useMemberStore'
+import type { TransactionStatus, TransactionType } from '../types/member'
+import { formatDate, formatMoney } from '../utils/format'
+
+export function TransactionsPage() {
+  const transactions = useMemberStore((state) => state.transactions); const [search, setSearch] = useState(''); const [type, setType] = useState<'All' | TransactionType>('All'); const [status, setStatus] = useState<'All' | TransactionStatus>('All')
+  const filtered = useMemo(() => transactions.filter((item) => (type === 'All' || item.type === type) && (status === 'All' || item.status === status) && `${item.id} ${item.reference} ${item.remark}`.toLowerCase().includes(search.toLowerCase())), [transactions, search, type, status])
+  return <div><PageHeading eyebrow="TRANSACTION LOG" title="Every pulse," highlight="tracked." description="Search and filter your locally generated member activity." icon={ListFilter} /><NeonCard className="table-panel"><div className="table-tools"><label className="search-box"><Search size={15} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search transaction or reference" /></label><select value={type} onChange={(event) => setType(event.target.value as 'All' | TransactionType)}><option>All</option><option>Deposit</option><option>Withdrawal</option><option>Bonus</option><option>Reward</option><option>Adjustment</option></select><select value={status} onChange={(event) => setStatus(event.target.value as 'All' | TransactionStatus)}><option>All</option><option>Success</option><option>Pending</option><option>Failed</option></select><button className="date-filter">DATE RANGE</button></div><div className="cyber-table-wrap"><table className="cyber-table"><thead><tr><th>TRANSACTION</th><th>TYPE</th><th>AMOUNT</th><th>DATE / TIME</th><th>STATUS</th><th>CHANNEL</th><th>REMARK</th></tr></thead><tbody>{filtered.map((item) => <tr key={item.id}><td><strong>{item.id}</strong><small>{item.reference}</small></td><td>{item.type}</td><td className={item.type === 'Deposit' || item.type === 'Bonus' || item.type === 'Reward' ? 'amount-positive' : 'amount-negative'}>{formatMoney(item.amount)}</td><td>{formatDate(item.date)}</td><td><StatusBadge status={item.status} /></td><td>{item.channel}</td><td>{item.remark}</td></tr>)}</tbody></table></div><div className="table-footer"><span>SHOWING {filtered.length} OF {transactions.length}</span><div><button disabled>‹</button><button className="active">1</button><button disabled>2</button><button disabled>›</button></div></div></NeonCard></div>
+}
