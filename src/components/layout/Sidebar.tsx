@@ -1,10 +1,10 @@
-import { Activity, BadgePercent, Gift, House, Settings, UserRound, WalletCards, X, Zap } from 'lucide-react'
+import { Activity, BadgePercent, Gamepad2, Gift, House, Settings, UserRound, WalletCards, X, Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
 
 const navigation = [
   { label: 'Home', to: '/', icon: House }, { label: 'Wallet', to: '/wallet', icon: WalletCards },
-  { label: 'Transactions', to: '/transactions', icon: Activity }, { label: 'Promotions', to: '/promotions', icon: BadgePercent },
+  { label: 'Transactions', to: '/transactions', icon: Activity }, { label: 'Games', to: '/games', icon: Gamepad2 }, { label: 'Promotions', to: '/promotions', icon: BadgePercent },
   { label: 'Rewards', to: '/rewards', icon: Gift }, { label: 'Profile', to: '/profile', icon: UserRound }, { label: 'Settings', to: '/settings', icon: Settings },
 ]
 
