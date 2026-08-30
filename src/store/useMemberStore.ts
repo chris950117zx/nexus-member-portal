@@ -4,8 +4,9 @@ import { defaultActivities, defaultProfile, defaultPromotions, defaultRewards, d
 import type { Activity, MemberProfile, MemberTransaction, Promotion, Reward, WalletState } from '../types/member'
 
 export type PortalTheme = 'neon-night' | 'black-yellow' | 'violet-haze'
-interface MemberStore { profile: MemberProfile; wallet: WalletState; transactions: MemberTransaction[]; activities: Activity[]; promotions: Promotion[]; rewards: Reward[]; portalTheme: PortalTheme; isAuthenticated: boolean; login: (username: string, password: string) => boolean; logout: () => void; depositFunds: (amount: number, note: string) => void; withdrawFunds: (amount: number, note: string) => boolean; claimPromotion: (id: string) => void; claimReward: (id: string) => boolean; updateProfile: (profile: Partial<MemberProfile>) => void; setPortalTheme: (theme: PortalTheme) => void; resetDemo: () => void }
-const freshDefaults = () => ({ profile: { ...defaultProfile }, wallet: { ...defaultWallet }, transactions: defaultTransactions.map((item) => ({ ...item })), activities: defaultActivities.map((item) => ({ ...item })), promotions: defaultPromotions.map((item) => ({ ...item })), rewards: defaultRewards.map((item) => ({ ...item })), portalTheme:'neon-night' as PortalTheme, isAuthenticated:false })
+export type PortalLanguage = 'en' | 'zh'
+interface MemberStore { profile: MemberProfile; wallet: WalletState; transactions: MemberTransaction[]; activities: Activity[]; promotions: Promotion[]; rewards: Reward[]; portalTheme: PortalTheme; language: PortalLanguage; soundEnabled: boolean; isAuthenticated: boolean; login: (username: string, password: string) => boolean; logout: () => void; depositFunds: (amount: number, note: string) => void; withdrawFunds: (amount: number, note: string) => boolean; claimPromotion: (id: string) => void; claimReward: (id: string) => boolean; updateProfile: (profile: Partial<MemberProfile>) => void; setPortalTheme: (theme: PortalTheme) => void; setLanguage: (language: PortalLanguage) => void; setSoundEnabled: (enabled: boolean) => void; resetDemo: () => void }
+const freshDefaults = () => ({ profile: { ...defaultProfile }, wallet: { ...defaultWallet }, transactions: defaultTransactions.map((item) => ({ ...item })), activities: defaultActivities.map((item) => ({ ...item })), promotions: defaultPromotions.map((item) => ({ ...item })), rewards: defaultRewards.map((item) => ({ ...item })), portalTheme:'neon-night' as PortalTheme, language:'en' as PortalLanguage, soundEnabled:false, isAuthenticated:false })
 const makeId = () => `TX-${Math.random().toString(16).slice(2, 9).toUpperCase()}`
 const makeActivityId = () => `ACT-${Date.now()}`
 
@@ -19,5 +20,7 @@ export const useMemberStore = create<MemberStore>()(persist((set, get) => ({
   claimReward: (id) => { const reward = get().rewards.find((item) => item.id === id); if (!reward || reward.claimed || get().wallet.rewardPoints < reward.cost) return false; set((state) => ({ wallet:{ ...state.wallet, rewardPoints:state.wallet.rewardPoints - reward.cost }, rewards:state.rewards.map((item) => item.id === id ? { ...item, claimed:true } : item), activities:[{ id:makeActivityId(), title:'Reward claimed', detail:reward.title, date:new Date().toISOString(), tone:'violet' }, ...state.activities] })); return true },
   updateProfile: (profile) => set((state) => ({ profile:{ ...state.profile, ...profile } })),
   setPortalTheme: (portalTheme) => set({ portalTheme }),
+  setLanguage: (language) => set({ language }),
+  setSoundEnabled: (soundEnabled) => set({ soundEnabled }),
   resetDemo: () => set(freshDefaults()),
 }), { name:'nexus-member-demo-v1' }))
