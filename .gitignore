@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Local mining reference frames and isolated browser checks
+/tmp/mining-reference/
+/tmp/mining-browser/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

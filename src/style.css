@@ -115,8 +115,9 @@ html[data-theme="black-yellow"] .wallet-hero{animation:wallet-yellow-flicker 12.
 .core-drop .mine-block--broken{animation:voxel-blast .48s steps(4) forwards}
 .tnt-legend{display:flex;align-items:center;gap:10px;margin-top:13px;padding:9px;border:1px solid #7b2a1e;background:linear-gradient(90deg,rgba(190,35,23,.2),transparent)}
 .tnt-legend b{padding:5px;color:#260906;background:#e8bf77;font:900 9px Audiowide;box-shadow:0 0 9px rgba(255,64,35,.42)}.tnt-legend span{color:#a78578;font-size:7px;letter-spacing:.08em}
+.core-drop .drop-tool{margin-left:0;transition:none;will-change:transform,top,left}.core-drop .block-field{row-gap:0;transition:none;background:#020202}.core-drop .mine-sky{transition:none}.core-drop .mine-block--mined:before{display:none}.core-drop .mine-shaft--running .drop-tool img{animation:none}
 @keyframes pickaxe-fall{0%{transform:translate(-13px,-5px) rotate(-20deg)}25%{transform:translate(5px,1px) rotate(7deg)}52%{transform:translate(14px,7px) rotate(22deg)}76%{transform:translate(-4px,12px) rotate(-6deg)}100%{transform:translate(-13px,17px) rotate(-20deg)}}
 @keyframes pickaxe-physics{0%{transform:translate(-13px,-20px) rotate(-22deg);animation-timing-function:cubic-bezier(.32,0,.72,.45)}24%{transform:translate(4px,-11px) rotate(5deg)}48%{transform:translate(13px,7px) rotate(23deg);animation-timing-function:cubic-bezier(.15,.8,.3,1)}68%{transform:translate(-10px,-16px) rotate(-23deg);animation-timing-function:ease-in}84%{transform:translate(7px,-19px) rotate(12deg)}100%{transform:translate(-13px,-20px) rotate(-18deg)}}
 @keyframes tnt-prime{50%{filter:brightness(2.1) saturate(1.5);transform:scale(.94)}}
 @keyframes voxel-blast{0%{opacity:1;transform:scale(1)}35%{filter:brightness(2.2);transform:scale(1.1) rotate(3deg)}70%{clip-path:polygon(0 0,45% 0,45% 34%,100% 34%,100% 74%,64% 74%,64% 100%,0 100%);transform:scale(.72) rotate(-5deg)}100%{opacity:0;transform:scale(.12) translateY(28px)}}
-@media(max-width:520px){.core-drop{--block-row:43px}.core-drop .drop-tool{width:52px;height:52px;margin-left:-26px}}
+@media(max-width:520px){.core-drop{--block-row:43px}.core-drop .drop-tool{width:52px;height:52px;margin-left:0}}
